@@ -14,7 +14,8 @@
 CREATE TABLE osm_views.web_00_grafo AS -- DA IMPORTARE POI IN "ADB"
 WITH grafo AS (
   -- GRAFO AUTO
-  SELECT id, version, user_id, tstamp, changeset_id, tags, nodes, bbox, linestring AS geom FROM osm_views.pinf_ways_auto
+  SELECT id, version, user_id, tstamp, changeset_id, tags, nodes, bbox, linestring AS geom 
+  FROM osm_views.pinf_ways_auto
   -- SELECT * FROM osm_views.auto_ways 
 
   UNION
@@ -28,11 +29,12 @@ WITH grafo AS (
   -- GRAFO PIEDI (dove ci sono errori - archi dove ci possono passare anche le auto -)
   SELECT * FROM osm_views.pinf_ways_piedi
   WHERE 
+  -- id identificati manualmente
     id=72889775 OR id=437268493 OR id=417065628 OR id=337622947 OR id=184207162 OR id=278242130 OR id=23449144 OR id=158183080 OR
     id=332413475 OR id=27854539 OR id=316197534 OR id=316197537 OR id=331312071 OR id=48121606	
 ),
 
--- DISTANZA DEL NODO DAL NODO DI PARTENZA ed ELIMINA EVENTUALI ERRORI DI POS (es.contatore=996
+-- DISTANZA DEL NODO DALLO START POINT DELLA WAYS ed ELIMINA EVENTUALI ERRORI DI POSIZIONE
 nodi AS (
   SELECT
      id, node_id, dist, pos, geom_line, verifica,
@@ -61,7 +63,7 @@ nodi AS (
     id, node_id, dist, pos,geom_line, verifica
 ),
 
--- 2. PER GLI ARCHI CHE SI CHIUDONO
+-- 2. PER GLI ARCHI CHE SI CHIUDONO (ad esempio le rotonde che hanno start_point=end_point)
 nodi_fine AS (
   SELECT 
     a.id, a.node_id, a.dist,
@@ -88,7 +90,7 @@ linea_chiusa AS (
     a.id=b.id AND a.rownum=b.rownum
 ),
 
--- 4. SE LA LINEA E' CHIUSA ALLORA BISOGNA AGGIUNGERE UN PUNTO: IL PUNTO CON 'POS=0' DIVENTA ANCHE IL PUNTO CON 'POS=1' 
+-- 4. SE LA LINEA E' CHIUSA (start_point=end_point) BISOGNA AGGIUNGERE UN PUNTO: IL PUNTO CON 'POS=0' DIVENTA ANCHE IL PUNTO CON 'POS=1' 
 nodi_all AS (
   -- nodi_fine
   SELECT id, node_id, dist, pos, rownum, geom_line
