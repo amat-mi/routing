@@ -81,7 +81,7 @@ nodi_fine AS (
 linea_chiusa AS (
   SELECT 
     a.id,
-    CASE WHEN a.pos=b.pos THEN 0 ELSE 1 END AS linea_chiusa,
+    CASE WHEN a.pos=b.pos THEN 0 ELSE 1 END AS linea_chiusa, 
     a.rownum AS rownum_max
   FROM 
     (SELECT id, MAX(pos)pos, MAX(rownum) rownum FROM nodi GROUP BY id) a, 
@@ -109,7 +109,7 @@ nodi_all AS (
 ),
     
 
--- 3. SPEZZA GLI ARCHI
+-- 3. SPEZZA GLI ARCHI DOVE CI SONO I NODI
 spezza_archi AS (
   SELECT 
     ROW_NUMBER() OVER(ORDER BY a.id) AS id, a.id AS way_originale, a.node_id AS node_start, b.node_id AS node_end, a.rownum as rownum1, b.rownum as rownum2,
@@ -123,7 +123,7 @@ spezza_archi AS (
     a.rownum=(b.rownum-1)
 ),
 
--- 5. CONSIDERA SOLO ARCHI PERCORRIBILI DALLE AUTO E IMPOSTA CAMPO BUS(0,1) E ONEWAY(0,1), REVERSE(0,1)
+-- 5.IMPOSTA CAMPO BUS(0,1) E ONEWAY(0,1), REVERSE(0,1)
 bus_oneway AS ( 
   SELECT 
     id, version, user_id, tstamp, changeset_id, tags, nodes, bbox, geom,
@@ -144,24 +144,6 @@ bus_oneway AS (
     CASE WHEN (tags -> 'oneway'='-1') THEN 1 ELSE 0 END AS reverse
   FROM 
     grafo w -- osm_views.pinf_ways_auto w
-  /*
-  WHERE 
-    -- filtra da manuale per selezionare le ways dove 
-    NOT( 
-     (NOT defined(w.tags,'highway'))
-      OR (w.tags -> 'highway' = 'track' and w.tags -> 'tracktype' not in ('grade1'))
-      OR (w.tags -> 'highway' not in ('motorway','motorway_link','trunk','trunk_link',
-          'primary','primary_link','secondary','secondary_link','tertiary','tertiary_link',
-          'unclassified','residential','living_street','service','road','track'))
-      OR (w.tags -> 'highway' = 'ford')
-      OR (coalesce(w.tags -> 'impassable','') = 'yes' or coalesce(w.tags -> 'status','') = 'impassable')
-      OR (defined(w.tags,'motorcar') and w.tags -> 'motorcar' not in ('yes','permissive'))
-      OR (defined(w.tags,'motor_vehicle') and w.tags -> 'motor_vehicle' not in ('yes','permissive'))
-      OR (defined(w.tags,'vehicle') and w.tags -> 'vehicle' not in ('yes','permissive'))
-      OR (defined(w.tags,'access') and w.tags -> 'access' not in ('yes','permissive'))
-      OR (defined(w.tags,'railway') and w.tags -> 'railway' not in ('disused','abandoned','tram'))
-    )
-  */
 )
 
 -- 6. FINE: associa al nuovo grafo le informazione su ONEWAY, BUS, REVERSE
