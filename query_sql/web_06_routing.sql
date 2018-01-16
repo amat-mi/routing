@@ -3,13 +3,14 @@
 
 -- TABELLE INPUT:
 -- 1. adb.web_04_stops (SOLO QUELLI CORRETTI)
--- 2. adb.web_02_grafo
+-- 2. adb.web_02_grafo per gli archi senza geometria esitente (geom_check=0)
 -- 3. adb.web_02_grafo_vertices_pgr
+-- 4. adb.web_05_grafo per gli archi con geometria esitente (geom_check=1)
 
 -- TABELLA OUTPUT:
 -- 1. adb.web_06_routing (popolata)
 
--- 1. CREA TABELLA DI APPOGGIO PER IL ROUTING
+-- 1. CREA TABELLA DI APPOGGIO IN CUI INSERIRE I RISULTATI DEL ROUTING
 /*
 CREATE TABLE adb.web_06_routing
 (
