@@ -1,6 +1,8 @@
 ﻿-- CREAZIONE GRAFO utile per ROUTING (e nuova topologia con nodi).
 -- alle ways originali (che vengono tenute) si aggiungono delle ways nuove, create spezzando il grafo dove ci sono le fermate. 
--- Sono stati creati i campi WAY_MODIFICATO(0,1), che indica se il record e' originale oppure ottenuto spezzando il grafo, e USARE(0,1), che indica se la way e' utile per il routing.
+-- Sono stati creati i campi WAY_MODIFICATO(0,1), 
+-- che indica se il record e' originale oppure ottenuto spezzando il grafo, 
+-- e USARE(0,1), che indica se la way e' utile per il routing.
 -- se il campo e' REVERSE allora e' stato invertito il senso della geometria
 -- N.B. Il ROUTING va fatto SOLO su quei record che hanno il campo USARE=1
 -- 
