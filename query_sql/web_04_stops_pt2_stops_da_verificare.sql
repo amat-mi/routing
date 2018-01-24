@@ -104,3 +104,20 @@ FROM
   verifica
 
 
+/*
+query di test: attnezione non restituisce esattamente gli stessi valori presenti nella tabella adb.web_04_stops_da_verificare
+
+WITH st AS
+(SELECT stop_id, stop_code, stop_name, stop_lon, stop_lat, geom, active
+  FROM adb.web_stops)
+
+SELECT stop_id_s, stop_id_e, stop_code_s, stop_code_e, line_id, line_code, 
+       l.geom, geom_check,
+       ST_Distance (ST_Startpoint(l.geom)::geography,a.geom::geography) as st_s, 
+        ST_Distance ( ST_Endpoint(l.geom)::geography, b.geom::geography) as e_d
+  FROM adb.web_lines l
+  LEFT JOIN st a ON stop_id_s = a.stop_id
+  LEFT JOIN st b ON stop_id_e = b.stop_id
+  order by e_d desc
+  */
+
