@@ -1,4 +1,4 @@
 q="""
 INSERT INTO adb.aa(a)
-VALUES(3);
+VALUE(3);
 """
