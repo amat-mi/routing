@@ -1,0 +1,9 @@
+1)	Lavorare su GRAFO PEDONALE, spezzarlo e creare la topologia
+2)	Proiettare le fermate sul grafo e raggrupparle se la geometria è la stessa
+3)	Fare il ROUTING tra le fermate ed i nodi in un raggio di 1000m (avevo usato “pgr_drivingdistance” http://docs.pgrouting.org/latest/en/pgr_drivingDistance.html#pgr-drivingdistance)
+Tirare fuori la distanza minima tra i FERMATA-NODI (entro 1000m)
+4)	Lanciare le query allegate
+
+
+todo:
+ragionare sui civici (spezzare il grafo coni civici?) a aggiungere a posteriori l'info civici.
