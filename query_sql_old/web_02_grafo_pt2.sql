@@ -8,6 +8,7 @@
 -- 2. adb.web_02_grafo_vertices_pgr
 
 -- 1. aggiungi SOURCE and TARGET per NODI
+DROP TABLE adb.web_02_grafo_vertices_pgr;
 ALTER TABLE adb.web_02_grafo
 ADD COLUMN source integer;
 
@@ -15,4 +16,4 @@ ALTER TABLE adb.web_02_grafo
 ADD COLUMN target integer;
 
 -- 2. CREA TOPOLGY
-SELECT pgr_createTopology('adb.web_02_grafo', 0.0001, 'geom', 'id_new');
+SELECT pgr_createTopology('adb.web_02_grafo', 0.000001, 'geom', 'id_new');
