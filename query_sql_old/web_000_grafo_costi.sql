@@ -37,7 +37,7 @@ WITH ways as(
  --ESTRAGGO I GRAFI DI RIFERIMENTO
  (
  SELECT 
-    'BUS'::text as modo,
+    3 as route_type, -- 'BUS'::text as modo,
     w.id,
     w.version,
     w.user_id,
@@ -106,7 +106,7 @@ WITH ways as(
 UNION
 
 SELECT 
-    'TRAM' as modo,
+    0 as route_type, --'TRAM' as modo,
     w.id,
     w.version,
     w.user_id,
@@ -122,7 +122,7 @@ SELECT
 	(w.tags -> 'railway'::text) = 'tram'::text 
 UNION
 SELECT 
-    'METRO' as modo,
+    1 as route_type, --'METRO' as modo,
     w.id,
     w.version,
     w.user_id,
@@ -138,7 +138,7 @@ SELECT
 	(w.tags -> 'railway'::text) = 'subway'::text 
 UNION
 SELECT 
-    'FERROVIA' as modo,
+    2 as route_type, --'FERROVIA' as modo,
     w.id,
     w.version,
     w.user_id,
