@@ -15,4 +15,4 @@ ALTER TABLE adb.web_00_grafo
 ADD COLUMN target integer;
 
 -- 2. CREA TOPOLGY
-SELECT pgr_createTopology('adb.web_00_grafo', 0.0001, 'geom', 'id');
+SELECT pgr_createTopology('adb.web_00_grafo', 0.000001,  'geom', 'id');
